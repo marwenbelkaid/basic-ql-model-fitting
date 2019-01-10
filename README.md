@@ -2,7 +2,7 @@
 An example of model fitting for a basic Q-Learning (QL) algorithm based on the scikit-learn Python library.
 
 ## General description
-This program implements a basic QL model in the basic\_qlestimator.py in the form of an estimator following the BaseEstimator class of the sklearn.base module. To fit this model to the data, the program supports two hyperparameter optimization procedures: Grid Search and Random Search (Bergstra and Bengio, 2012). These are respectively implemented in files modelfitting\_gridsearch.py and modelfitting\_randomsearch.py using the sklearn.model_selection module. 
+This program implements a basic QL model in the basic\_qlestimator.py in the form of an estimator following the structure of BaseEstimator class of the sklearn.base module. To fit this model to the data, the program supports two hyperparameter optimization procedures: Grid Search and Random Search (Bergstra and Bengio, 2012). These are respectively implemented in files modelfitting\_gridsearch.py and modelfitting\_randomsearch.py using the sklearn.model_selection module. 
 
 Two .sh shell scripts are provided to launch the model fitting procedures.
 
