@@ -11,8 +11,8 @@ Two .sh shell scripts are provided to launch the model fitting procedures.
 2. Specify parameter ranges (discrete values for grid search, probability distributions for random search) and number of samples if random search
 3. Get parameter sets to be tested depending on the optimization procedure
 4. Run the model N times for each parameter set. Executions are parallelized accross parameter sets. For each run
-	a. The estimator (QLEstimator, encapsulating the QL model) is instantiated with a given set of parameter values
-	b. The fit() function runs the model and collects the results 
-	c. A score() function calls the predict() function which computes the estimator's predictions given those results then computes the score. Two score() function are provided, one that computes the score based on the distance to the closest point of the data, one based on the average of all datapoints (or one specific datapoint if average_line is specified)
+	1. The estimator (QLEstimator, encapsulating the QL model) is instantiated with a given set of parameter values
+	2. The fit() function runs the model and collects the results 
+	3. A score() function calls the predict() function which computes the estimator's predictions given those results then computes the score. Two score() function are provided, one that computes the score based on the distance to the closest point of the data, one based on the average of all datapoints (or one specific datapoint if average_line is specified)
 
 
