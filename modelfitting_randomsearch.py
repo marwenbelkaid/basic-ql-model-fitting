@@ -9,6 +9,20 @@ from basic_qlestimator import QLEstimator
 
 
 
+nb_runs		= 20
+
+''' Define job for each worker in the multiproc computation '''
+def test_sample(gridpoint):
+	print "Testing estimator with sample #", gridpoint['sample_index']
+	for k in range(nb_runs):
+		gridpoint.update({'run': k })
+		model = QLEstimator(**gridpoint)
+		model.fit(dataset)
+		score_a = model.score_wrt_average(dataset)
+		score_c = model.score_wrt_closest(dataset)
+		
+		
+		
 ''' Get dataset '''
 filename = "data.txt"
 dataset = np.loadtxt(filename, dtype=np.dtype("float32"), unpack=True, usecols=[1,2]) 
@@ -16,16 +30,6 @@ dataset = np.transpose(dataset)
 dataset_labels = np.loadtxt(filename, dtype=np.dtype("str"), unpack=True, usecols=[0]) 
 
 
-
-''' Define job for each worker in the multiproc computation '''
-def test_sample(gridpoint):
-	print "Testing estimator with sample #", gridpoint['sample_index']
-	model = QLEstimator(**gridpoint)
-	model.fit(dataset)
-	score_a = model.score_wrt_average(dataset)
-	score_c = model.score_wrt_closest(dataset)
-	
-	
 	
 	
 ''' Set number of samples and number of fits '''

@@ -115,7 +115,7 @@ class QLEstimator(BaseEstimator):
 	It overrides the methods fit(), predict() and score()
 	"""
 	
-	def __init__(self, alpha=0.1, tau=5.0, average_line=-1, sample_index=-1):
+	def __init__(self, alpha=0.1, tau=5.0, average_line=-1, sample_index=-1, run=1):
 		""" 
 		This is the constructor 
 		
@@ -128,6 +128,8 @@ class QLEstimator(BaseEstimator):
 			otherwise -1 means the average will be computed online
 		sample_index : int
 			index of current estimator, the default value -1 should be overriden
+		run : int
+			index of run (if many executions per paramset)
 		
 
 		"""
@@ -165,7 +167,7 @@ class QLEstimator(BaseEstimator):
 		self.s_ = out_choices
 		
 		''' Save data '''
-		datafile = "log/fit_" + str(self.sample_index)
+		datafile = "log/fit_" + str(self.sample_index) + "_run_" + str(self.run)
 		data_to_save = np.transpose((out_choices, out_vcrw))
 		np.savetxt(datafile, data_to_save, fmt='%d')
 			
