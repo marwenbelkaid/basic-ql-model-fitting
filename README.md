@@ -15,7 +15,7 @@ An example of model fitting for a basic Q-Learning (QL) algorithm based on the s
 ## General description
 This program implements a basic QL model in the basic\_qlestimator.py in the form of an estimator following the structure of BaseEstimator class of the sklearn.base module. To fit this model to the data, the program supports three hyperparameter optimization procedures: Grid Search, Random Search (Bergstra and Bengio, 2012), and Bayesian Optimization (Snoek et al., 2012). The Grid and Random Search methods are respectively implemented in files modelfitting\_gridsearch.py and modelfitting\_randomsearch.py using the sklearn.model_selection module. The Bayesian Optimization method is implemented in file  modelfitting\_bayesoptim.py and is based on the GPyOpt library (The GPyOpt authors, 2016).
 
-Two .sh shell scripts are provided to launch the model fitting procedures.
+Three .sh shell scripts are provided to launch the model fitting procedures.
 
 #### Toy example:
 The task that the QL algorithm has to solve here is a 3-armed bandit. For simplicity, 2 targets (or arms) have a 100% reward probability, and the has 0% probability. The measures we want to fit in the data are the success rate (i.e. % of rewards) and the U-turn rate (i.e. % of choosing the same target as at time t-2 when at time t). 
