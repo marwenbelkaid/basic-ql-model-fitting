@@ -115,7 +115,7 @@ class QLEstimator(BaseEstimator):
 	It overrides the methods fit(), predict() and score()
 	"""
 	
-	def __init__(self, alpha=0.1, tau=5.0, average_line=-1, sample_index=-1, run=1):
+	def __init__(self, alpha=0.1, tau=5.0, average_line=-1, sample_index=-1, run=1, log_results_internally=1, log_sequences_internally=1):
 		""" 
 		This is the constructor 
 		
@@ -130,6 +130,10 @@ class QLEstimator(BaseEstimator):
 			index of current estimator, the default value -1 should be overriden
 		run : int
 			index of run (if many executions per paramset)
+		log_results_internally, log_sequences_internally : int
+			flags indicating whether to save log and result files within estimator
+			this is useful when using Grid or Random Search Optimization methods 
+			however Bayesian Optimization has built-in log functions
 		
 
 		"""
@@ -167,9 +171,10 @@ class QLEstimator(BaseEstimator):
 		self.s_ = out_choices
 		
 		''' Save data '''
-		datafile = "log/fit_" + str(self.sample_index) + "_run_" + str(self.run)
-		data_to_save = np.transpose((out_choices, out_vcrw))
-		np.savetxt(datafile, data_to_save, fmt='%d')
+		if self.log_sequences_internally == 1:
+			datafile = "log/fit_" + str(self.sample_index) + "_run_" + str(self.run)
+			data_to_save = np.transpose((out_choices, out_vcrw))
+			np.savetxt(datafile, data_to_save, fmt='%d')
 			
 		
 	def predict(self, X, y=None):
@@ -246,10 +251,11 @@ class QLEstimator(BaseEstimator):
 		
 		score = 1 - ( (abs(pred0 - data0) + abs(pred1 - data1)) / 2. )
 		
-		logfile = "results/score_a_fit_" + str(self.sample_index)
-		with open(logfile,'a') as outfp:
-			data_to_save = '{:4.3f} -1 {:4.3f} {:06.3f} -1 {:4.3f} {:4.3f} {:4.3f} {:4.3f}\n'.format(score, self.alpha, self.tau, data0, data1, pred0, pred1)
-			outfp.write(data_to_save)
+		if self.log_results_internally == 1:
+			logfile = "results/score_a_fit_" + str(self.sample_index) + "_run_" + str(self.run)
+			with open(logfile,'a') as outfp:
+				data_to_save = '{:4.3f} -1 {:4.3f} {:06.3f} -1 {:4.3f} {:4.3f} {:4.3f} {:4.3f}\n'.format(score, self.alpha, self.tau, data0, data1, pred0, pred1)
+				outfp.write(data_to_save)
 		
 		return score
 			
@@ -275,10 +281,11 @@ class QLEstimator(BaseEstimator):
 					closest_score = score
 					closest_index = i
 		
-		logfile = "results/score_c_fit_" + str(self.sample_index)
-		with open(logfile,'a') as outfp:
-			data_to_save = '{:4.3f} {:d} {:4.3f} {:06.3f} {:d} {:4.3f} {:4.3f}\n'.format(closest_score, closest_index, self.alpha, self.tau, closest_index, pred0, pred1)
-			outfp.write(data_to_save)
+		if self.log_results_internally == 1:
+			logfile = "results/score_c_fit_" + str(self.sample_index) + "_run_" + str(self.run)
+			with open(logfile,'a') as outfp:
+				data_to_save = '{:4.3f} {:d} {:4.3f} {:06.3f} {:d} {:4.3f} {:4.3f}\n'.format(closest_score, closest_index, self.alpha, self.tau, closest_index, pred0, pred1)
+				outfp.write(data_to_save)
 			
 	
 	

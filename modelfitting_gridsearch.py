@@ -44,6 +44,8 @@ for i, gridpoint in enumerate(sample_list):
 	gridpoint.update({'average_line': 0 })	# indicate here line number corresponding to a specific datapoint you want to fit
 											# this can be typically be used to avoid computing the data average at every run by manually indicating that average at line 0
 											# if -1 is indicated here, then the average is computed in the score() function
+	gridpoint_.update({'log_results_internally': 1 })	
+	gridpoint_.update({'log_sequences_internally': 1 }) 
 
 
 ''' Run parallel fit '''
